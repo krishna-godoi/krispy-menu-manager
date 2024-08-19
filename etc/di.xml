@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Kriscpg\Menu\Api\MenuRepositoryInterface" type="Kriscpg\Menu\Service\MenuRepository" />
+    <preference for="Kriscpg\Menu\Api\MenuItemRepositoryInterface" type="Kriscpg\Menu\Service\MenuItemRepository" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="menu_block_listing_data_source" xsi:type="string">Kriscpg\Menu\Model\ResourceModel\Menu\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Kriscpg\Menu\Model\ResourceModel\Menu\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">menu_block</argument>
+            <argument name="eventPrefix" xsi:type="string">menu_block_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">menu_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Kriscpg\Menu\Model\ResourceModel\Menu</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,80 @@
+<?php
+    $formActionUrl = $block->getFormAction();
+?>
+<style>
+    #item-creation-form {
+       pointer-events: none;
+
+        * {
+            pointer-events: all;
+        }
+    }
+</style>
+<div id="add-item-modal" style="display:none;">
+    <div class="modal-content">
+        <form
+            class="admin__form-loading-mask"
+            id="item-creation-form"
+        >
+            <label for="item-type">Item Type</label>
+            <select id="item-type" name="menu_item_type">
+                <option value="link">Link</option>
+                <option value="category">Category</option>
+                <option value="container">Container Item</option>
+            </select>
+            <label for="item-label">Label</label>
+            <input id="item-label" type="text" name="label" />
+            <label for="item-url">Target URL</label>
+            <input id="item-url" type="text" name="target_url" />
+        </form>
+    </div>
+    <button id="form-handler-button">Submit</button>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'Magento_Ui/js/modal/modal',
+    ], function($, modal) {
+        'use strict';
+
+        let options = {
+            type: 'popup',
+            responsive: true,
+            innerScroll: true,
+            title: 'Your Modal Title',
+            buttons: [{
+                text: $.mage.__('Close'),
+                class: '',
+                click: function () {
+                    this.closeModal();
+                }
+            }]
+        };
+
+        modal(options, $('#add-item-modal'));
+
+        $(document).on('click', '#form-handler-button', function(e) {
+            const form = $('#item-creation-form');
+
+            form.trigger('processStart');
+
+            $.ajax({
+                url: '<?= $block->escapeJs($formActionUrl) ?>',
+                data: form.serialize(),
+                dataType: 'json',
+                type: 'POST'
+            }).done(function(response) {
+                if (response.error) {
+                    // Handle errors
+                    alert(response.message);
+                } else {
+                    // Handle success
+                    form.trigger('processStop');
+                    $('#add-item-modal').modal('closeModal');
+                }
+            }).fail(function() {
+                alert('An error occurred while submitting the form.');
+            });
+        });
+    });
+</script>
