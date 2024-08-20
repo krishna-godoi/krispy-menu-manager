@@ -4,6 +4,8 @@ namespace Kriscpg\Menu\Api;
 
 use Exception;
 use Kriscpg\Menu\Api\Data\MenuItemInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SearchResultsInterface;
 
 interface MenuItemRepositoryInterface
 {
@@ -22,6 +24,14 @@ interface MenuItemRepositoryInterface
      * @return MenuItemInterface
      */
     public function getById(int $menuItemId): MenuItemInterface;
+
+    /**
+     * Get list of menu items
+     *
+     * @param SearchCriteriaInterface $searchCriteria
+     * @return SearchResultInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface;
 
     /**
      * Delete menu item

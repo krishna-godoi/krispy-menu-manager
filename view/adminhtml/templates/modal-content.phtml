@@ -1,19 +1,6 @@
-<?php
-    $formActionUrl = $block->getFormAction();
-?>
-<style>
-    #item-creation-form {
-       pointer-events: none;
-
-        * {
-            pointer-events: all;
-        }
-    }
-</style>
 <div id="add-item-modal" style="display:none;">
     <div class="modal-content">
         <form
-            class="admin__form-loading-mask"
             id="item-creation-form"
         >
             <label for="item-type">Item Type</label>
@@ -25,10 +12,11 @@
             <label for="item-label">Label</label>
             <input id="item-label" type="text" name="label" />
             <label for="item-url">Target URL</label>
-            <input id="item-url" type="text" name="target_url" />
+            <input id="item-url" type="text" name="targetUrl" />
+            <label for="item-parent">Parent ID</label>
+            <input id="item-parent" type="text" name="parentId" />
         </form>
     </div>
-    <button id="form-handler-button">Submit</button>
 </div>
 <script type="text/javascript">
     require([
@@ -38,43 +26,35 @@
         'use strict';
 
         let options = {
-            type: 'popup',
+            type: 'slide',
             responsive: true,
             innerScroll: true,
-            title: 'Your Modal Title',
+            title: 'Create New Item',
             buttons: [{
-                text: $.mage.__('Close'),
+                text: $.mage.__('Save'),
                 class: '',
                 click: function () {
-                    this.closeModal();
+                    handleItemSave();
                 }
             }]
         };
 
         modal(options, $('#add-item-modal'));
 
-        $(document).on('click', '#form-handler-button', function(e) {
+        const handleItemSave = function(e) {
             const form = $('#item-creation-form');
 
-            form.trigger('processStart');
+            let formData = form.serializeArray();
+            let item = {};
 
-            $.ajax({
-                url: '<?= $block->escapeJs($formActionUrl) ?>',
-                data: form.serialize(),
-                dataType: 'json',
-                type: 'POST'
-            }).done(function(response) {
-                if (response.error) {
-                    // Handle errors
-                    alert(response.message);
-                } else {
-                    // Handle success
-                    form.trigger('processStop');
-                    $('#add-item-modal').modal('closeModal');
-                }
-            }).fail(function() {
-                alert('An error occurred while submitting the form.');
-            });
-        });
+            formData.forEach(({name, value}) => {
+                item[name] = value;
+            })
+
+            window.createItem(item);
+
+            $('#add-item-modal').modal('closeModal');
+            form.trigger('reset');
+        };
     });
 </script>

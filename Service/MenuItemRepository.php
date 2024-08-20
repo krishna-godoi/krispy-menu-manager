@@ -6,6 +6,10 @@ use Kriscpg\Menu\Api\Data\MenuItemInterface;
 use Kriscpg\Menu\Api\MenuItemRepositoryInterface;
 use Kriscpg\Menu\Model\ResourceModel\MenuItem as MenuItemResource;
 use Kriscpg\Menu\Model\MenuItemFactory;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Api\SearchResultsInterfaceFactory;
+use Kriscpg\Menu\Model\ResourceModel\MenuItem\CollectionFactory;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -13,6 +17,7 @@ use Magento\Framework\Data\Form\FormKey\Validator as FormKeyValidator;
 
 class MenuItemRepository implements MenuItemRepositoryInterface
 {
+
     /**
      * @param MenuItemResource $resource
      * @param MenuItemFactory $factory
@@ -22,6 +27,8 @@ class MenuItemRepository implements MenuItemRepositoryInterface
         private readonly MenuItemResource $resource,
         private readonly MenuItemFactory $factory,
         private readonly FormKeyValidator $validator,
+        private readonly SearchResultsInterfaceFactory $searchResultsFactory,
+        private readonly CollectionFactory $collectionFactory,
     ) {
     }
 
@@ -84,5 +91,37 @@ class MenuItemRepository implements MenuItemRepositoryInterface
         $this->resource->save($item);
 
         return (int) $item->getId();
+    }
+
+    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface
+    {
+        $collection = $this->collectionFactory->create();
+
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
+            foreach ($filterGroup->getFilters() as $filter) {
+                $condition = $filter->getConditionType() ?: 'eq';
+                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+            }
+        }
+
+        $sortOrders = $searchCriteria->getSortOrders();
+        if ($sortOrders) {
+            foreach ($sortOrders as $sortOrder) {
+                $collection->addOrder(
+                    $sortOrder->getField(),
+                    ($sortOrder->getDirection() == SortOrder::SORT_ASC) ? 'ASC' : 'DESC'
+                );
+            }
+        }
+
+        $collection->setPageSize($searchCriteria->getPageSize());
+        $collection->setCurPage($searchCriteria->getCurrentPage());
+
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+
+        return $searchResults;
     }
 }
