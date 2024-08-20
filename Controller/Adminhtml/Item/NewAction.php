@@ -1,17 +1,34 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Controller\Adminhtml\Item;
 
 use Kriscpg\Menu\Api\MenuItemRepositoryInterface;
 use Magento\Backend\App\Action;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\ResultInterface;
 
 class NewAction extends Action
 {
-    protected $resultJsonFactory;
-    protected $itemRepository;
+    /**
+     * @var JsonFactory $resultJsonFactory
+     */
+    protected JsonFactory $resultJsonFactory;
 
+    /**
+     * @var MenuItemRepositoryInterface $itemRepository
+     */
+    protected MenuItemRepositoryInterface $itemRepository;
+
+    /**
+     * @param Context $context
+     * @param JsonFactory $resultJsonFactory
+     * @param MenuItemRepositoryInterface $itemRepository
+     */
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
@@ -22,7 +39,12 @@ class NewAction extends Action
         $this->itemRepository = $itemRepository;
     }
 
-    public function execute()
+    /**
+     * Execute new route action
+     *
+     * @return ResponseInterface|Json|ResultInterface
+     */
+    public function execute(): ResponseInterface|Json|ResultInterface
     {
         $request = $this->getRequest();
         $resultJson = $this->resultJsonFactory->create();
@@ -33,6 +55,11 @@ class NewAction extends Action
         return $resultJson->setData(['success' => true, 'message' => $itemId]);
     }
 
+    /**
+     * Request validator
+     *
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Kriscpg_menu::menu');

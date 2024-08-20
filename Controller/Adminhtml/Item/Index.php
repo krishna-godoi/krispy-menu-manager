@@ -8,19 +8,35 @@ use Kriscpg\Menu\Api\MenuItemRepositoryInterface;
 use Magento\Backend\App\Action;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterfaceFactory;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\ResultInterface;
 
 class Index extends Action
 {
-    protected $resultJsonFactory;
-    protected $itemRepository;
+    /**
+     * @var JsonFactory $resultJsonFactory
+     */
+    protected JsonFactory $resultJsonFactory;
 
+    /**
+     * @var MenuItemRepositoryInterface $itemRepository
+     */
+    protected MenuItemRepositoryInterface $itemRepository;
+
+    /**
+     * @param Context $context
+     * @param JsonFactory $resultJsonFactory
+     * @param MenuItemRepositoryInterface $itemRepository
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     */
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
         MenuItemRepositoryInterface $itemRepository,
-        private SearchCriteriaBuilder $searchCriteriaBuilder
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder
 
     ) {
         parent::__construct($context);
@@ -28,7 +44,12 @@ class Index extends Action
         $this->itemRepository = $itemRepository;
     }
 
-    public function execute()
+    /**
+     * Execute index route action
+     *
+     * @return ResponseInterface|Json|ResultInterface
+     */
+    public function execute(): ResponseInterface|Json|ResultInterface
     {
         $request = $this->getRequest();
         $resultJson = $this->resultJsonFactory->create();
@@ -48,7 +69,12 @@ class Index extends Action
         return $resultJson->setData($items);
     }
 
-    protected function _isAllowed()
+    /**
+     * Request validator
+     *
+     * @return bool
+     */
+    protected function _isAllowed(): bool
     {
         return $this->_authorization->isAllowed('Kriscpg_menu::menu');
     }

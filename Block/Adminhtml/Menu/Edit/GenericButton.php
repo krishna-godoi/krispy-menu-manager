@@ -1,28 +1,18 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Block\Adminhtml\Block\Edit;
+
+declare(strict_types=1);
+
+namespace Kriscpg\Menu\Block\Adminhtml\Menu\Edit;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Cms\Api\BlockRepositoryInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
 
-/**
- * Class GenericButton
- */
 class GenericButton
 {
     /**
      * @var Context
      */
-    protected $context;
-
-    /**
-     * @var BlockRepositoryInterface
-     */
-    protected $blockRepository;
+    protected Context $context;
 
     /**
      * @param Context $context
@@ -33,23 +23,16 @@ class GenericButton
         BlockRepositoryInterface $blockRepository
     ) {
         $this->context = $context;
-        $this->blockRepository = $blockRepository;
     }
 
     /**
-     * Return CMS block ID
+     * Get menu ID from request
      *
-     * @return int|null
+     * @return int
      */
-    public function getBlockId()
+    public function getMenuId(): int
     {
-        try {
-            return $this->blockRepository->getById(
-                $this->context->getRequest()->getParam('block_id')
-            )->getId();
-        } catch (NoSuchEntityException $e) {
-        }
-        return null;
+        return (int) $this->context->getRequest()->getParam('menu_id', 0);
     }
 
     /**
@@ -59,7 +42,7 @@ class GenericButton
      * @param   array $params
      * @return  string
      */
-    public function getUrl($route = '', $params = [])
+    public function getUrl(string $route = '', array $params = []): string
     {
         return $this->context->getUrlBuilder()->getUrl($route, $params);
     }

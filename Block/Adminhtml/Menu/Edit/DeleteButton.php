@@ -1,26 +1,24 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Magento\Cms\Block\Adminhtml\Block\Edit;
+
+declare(strict_types=1);
+
+namespace Kriscpg\Menu\Block\Adminhtml\Menu\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-/**
- * Class DeleteButton
- */
 class DeleteButton extends GenericButton implements ButtonProviderInterface
 {
     /**
-     * @inheritDoc
+     * Get button data
+     *
+     * @return array
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         $data = [];
-        if ($this->getBlockId()) {
+        if ($this->getMenuId()) {
             $data = [
-                'label' => __('Delete Block'),
+                'label' => __('Delete Menu'),
                 'class' => 'delete',
                 'on_click' => 'deleteConfirm(\'' . __(
                     'Are you sure you want to do this?'
@@ -36,8 +34,8 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
      *
      * @return string
      */
-    public function getDeleteUrl()
+    public function getDeleteUrl(): string
     {
-        return $this->getUrl('*/*/delete', ['block_id' => $this->getBlockId()]);
+        return $this->getUrl('*/*/delete', ['menu_id' => $this->getMenuId()]);
     }
 }

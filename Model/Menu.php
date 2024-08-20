@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Model;
 
@@ -21,62 +23,128 @@ class Menu extends AbstractModel implements MenuInterface
         $this->_init(MenuResource::class);
     }
 
+    /**
+     * Get Menu ID
+     *
+     * @return int
+     */
     public function getMenuId(): int
     {
         return (int) $this->getData(self::MENU_ID);
     }
 
-    public function setMenuId(int $menuId)
+    /**
+     * Set Menu ID
+     *
+     * @param int $menuId
+     * @return void
+     */
+    public function setMenuId(int $menuId): void
     {
         $this->setData(self::MENU_ID, $menuId);
     }
 
+    /**
+     * Get menu name
+     *
+     * @return string
+     */
     public function getName(): string
     {
         return $this->getData(self::NAME);
     }
 
-    public function setName(string $name)
+    /**
+     * Set menu name
+     *
+     * @param string $name
+     * @return void
+     */
+    public function setName(string $name): void
     {
         $this->setData(self::NAME, $name);
     }
 
+    /**
+     * Get menu identifier
+     *
+     * @return string
+     */
     public function getIdentifier(): string
     {
         return $this->getData(self::IDENTIFIER);
     }
 
-    public function setIdentifier(string $identifier)
+    /**
+     * Set menu identifier
+     *
+     * @param string $identifier
+     * @return void
+     */
+    public function setIdentifier(string $identifier): void
     {
         $this->setData(self::IDENTIFIER, $identifier);
     }
 
+    /**
+     * Get menu creation time
+     *
+     * @return string
+     */
     public function getCreatedAt(): string
     {
         return $this->getData(self::CREATED_AT);
     }
 
-    public function setCreatedAt(string $createdAt)
+    /**
+     * Set menu created time
+     *
+     * @param string $createdAt
+     * @return void
+     */
+    public function setCreatedAt(string $createdAt): void
     {
         $this->setData(self::CREATED_AT, $createdAt);
     }
 
+    /**
+     * Get menu update time
+     *
+     * @return string
+     */
     public function getUpdatedAt(): string
     {
         return $this->getData(self::UPDATED_AT);
     }
 
-    public function setUpdatedAt(string $updatedAt)
+    /**
+     * Set menu update time
+     *
+     * @param string $updatedAt
+     * @return void
+     */
+    public function setUpdatedAt(string $updatedAt): void
     {
         $this->setData(self::UPDATED_AT, $updatedAt);
     }
 
+    /**
+     * Get menu is_active
+     *
+     * @return bool
+     */
     public function getIsActive(): bool
     {
         return (bool) $this->getData(self::IS_ACTIVE);
     }
 
-    public function setIsActive(bool $isActive)
+    /**
+     * Set menu is_active
+     *
+     * @param bool $isActive
+     * @return void
+     */
+    public function setIsActive(bool $isActive): void
     {
         $this->setData(self::IS_ACTIVE, $isActive);
     }

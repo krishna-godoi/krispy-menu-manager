@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Controller\Adminhtml\Menu;
 
@@ -10,6 +12,10 @@ use Magento\Framework\Controller\ResultInterface;
 
 class Delete extends Action
 {
+    /**
+     * @param Context $context
+     * @param MenuRepositoryInterface $menuRepository
+     */
     public function __construct(
         Context $context,
         private readonly MenuRepositoryInterface $menuRepository,
@@ -18,7 +24,9 @@ class Delete extends Action
     }
 
     /**
-     * @inheritDoc
+     * Execute delete route action
+     *
+     * @return ResultInterface
      */
     public function execute(): ResultInterface
     {

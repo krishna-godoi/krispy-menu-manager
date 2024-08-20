@@ -1,52 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Ui\Component;
 
 use Kriscpg\Menu\Model\Menu;
-use Magento\Framework\Api\FilterBuilder;
-use Magento\Framework\Api\Search\SearchCriteriaBuilder;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
+use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider as SourceDataProvider;
 
-class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
+class DataProvider extends SourceDataProvider
 {
     /**
-     * @param string $name
-     * @param string $primaryFieldName
-     * @param string $requestFieldName
-     * @param Reporting $reporting
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param RequestInterface $request
-     * @param FilterBuilder $filterBuilder
-     * @param array $meta
-     * @param array $data
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @param SearchResultsInterface $searchResult
+     * @return array
      */
-    public function __construct(
-        $name,
-        $primaryFieldName,
-        $requestFieldName,
-        Reporting $reporting,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        RequestInterface $request,
-        FilterBuilder $filterBuilder,
-        array $meta = [],
-        array $data = [],
-    ) {
-        parent::__construct(
-            $name,
-            $primaryFieldName,
-            $requestFieldName,
-            $reporting,
-            $searchCriteriaBuilder,
-            $request,
-            $filterBuilder,
-            $meta,
-            $data
-        );
-    }
-
-    protected function searchResultToOutput(SearchResultInterface|\Magento\Framework\Api\Search\SearchResultInterface $searchResult): array
+    protected function searchResultToOutput(SearchResultsInterface $searchResult): array
     {
         $arrItems = [];
 

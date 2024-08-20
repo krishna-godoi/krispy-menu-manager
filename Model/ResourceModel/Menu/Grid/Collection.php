@@ -1,21 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Model\ResourceModel\Menu\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\Search\AggregationInterface;
 use Kriscpg\Menu\Model\ResourceModel\Menu\Collection as MenuCollection;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
 use Magento\Framework\Data\Collection\EntityFactoryInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
-use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -33,12 +32,20 @@ class Collection extends MenuCollection implements SearchResultInterface
      */
     protected AggregationInterface $aggregations;
 
-    /** @var mixed */
-    private mixed $model;
-
-    /** @var string */
-    private string $resourceModel;
-
+    /**
+     * @param EntityFactoryInterface $entityFactory
+     * @param LoggerInterface $logger
+     * @param FetchStrategyInterface $fetchStrategy
+     * @param ManagerInterface $eventManager
+     * @param $mainTable
+     * @param $eventPrefix
+     * @param $eventObject
+     * @param $resourceModel
+     * @param TimezoneInterface $timeZone
+     * @param $model
+     * @param AdapterInterface|null $connection
+     * @param AbstractDb|null $resource
+     */
     public function __construct(
         \Magento\Framework\Data\Collection\EntityFactoryInterface    $entityFactory,
         \Psr\Log\LoggerInterface                                     $logger,
@@ -49,7 +56,7 @@ class Collection extends MenuCollection implements SearchResultInterface
         $eventObject,
         $resourceModel,
         TimezoneInterface $timeZone,
-        $model = \Magento\Framework\View\Element\UiComponent\DataProvider\Document::class,
+        $model = Document::class,
         \Magento\Framework\DB\Adapter\AdapterInterface               $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb         $resource = null,
     ) {

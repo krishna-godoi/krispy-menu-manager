@@ -1,12 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kriscpg\Menu\Ui\Source\Listing\Column;
 
-class isActive implements \Magento\Framework\Data\OptionSourceInterface
+use Magento\Framework\Data\OptionSourceInterface;
+
+class IsActive implements OptionSourceInterface
 {
     private const int ENABLED = 1;
     private const int DISABLED = 0;
 
+    /**
+     * Map int to option array
+     *
+     * @return array[]
+     */
     public function toOptionArray(): array
     {
         return [

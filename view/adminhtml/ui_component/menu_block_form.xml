@@ -9,7 +9,7 @@
     </argument>
     <settings>
         <buttons>
-            <button name="save" class="Magento\Cms\Block\Adminhtml\Block\Edit\SaveButton"/>
+            <button name="save" class="Kriscpg\Menu\Block\Adminhtml\Menu\Edit\SaveButton"/>
             <button name="delete" class="Magento\Cms\Block\Adminhtml\Block\Edit\DeleteButton"/>
             <button name="back" class="Magento\Cms\Block\Adminhtml\Block\Edit\BackButton"/>
         </buttons>

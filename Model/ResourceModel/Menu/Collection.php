@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Model\ResourceModel\Menu;
 
@@ -15,5 +17,4 @@ class Collection extends AbstractCollection
             MenuResource::class
         );
     }
-
 }

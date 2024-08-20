@@ -1,15 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Controller\Adminhtml\Menu;
 
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\View\Result\Page;
 
 class Index extends Action
 {
-    /** @var Page $page */
+    /**
+     * Execute index route action
+     *
+     * @return ResultInterface
+     */
     public function execute(): ResultInterface
     {
         $page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);

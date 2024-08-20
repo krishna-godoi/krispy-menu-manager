@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Api;
 
@@ -29,7 +31,7 @@ interface MenuItemRepositoryInterface
      * Get list of menu items
      *
      * @param SearchCriteriaInterface $searchCriteria
-     * @return SearchResultInterface
+     * @return SearchResultsInterface
      */
     public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface;
 
@@ -43,7 +45,7 @@ interface MenuItemRepositoryInterface
     public function delete(MenuItemInterface $menuItem): void;
 
     /**
-     * Delete menu item
+     * Create menu item
      *
      * @param mixed $data
      * @return int

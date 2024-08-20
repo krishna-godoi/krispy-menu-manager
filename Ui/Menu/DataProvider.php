@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Ui\Menu;
 
+use Kriscpg\Menu\Model\Menu;
 use Kriscpg\Menu\Model\ResourceModel\Menu\Collection;
 use Kriscpg\Menu\Model\ResourceModel\Menu\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -18,13 +21,23 @@ class DataProvider extends ModifierPoolDataProvider
     /**
      * @var DataPersistorInterface
      */
-    protected $dataPersistor;
+    protected DataPersistorInterface $dataPersistor;
 
     /**
      * @var array
      */
-    private $loadedData = [];
+    private array $loadedData = [];
 
+    /**
+     * @param $name
+     * @param $primaryFieldName
+     * @param $requestFieldName
+     * @param CollectionFactory $blockCollectionFactory
+     * @param DataPersistorInterface $dataPersistor
+     * @param array $meta
+     * @param array $data
+     * @param PoolInterface|null $pool
+     */
     public function __construct(
         $name,
         $primaryFieldName,
@@ -51,7 +64,7 @@ class DataProvider extends ModifierPoolDataProvider
             return $this->loadedData;
         }
         $items = $this->collection->getItems();
-        /** @var \Kriscpg\Menu\Model\Menu $block */
+        /** @var Menu $block */
         foreach ($items as $block) {
             $this->loadedData[$block->getId()] = $block->getData();
         }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kriscpg\Menu\Service;
 
@@ -13,7 +15,6 @@ use Kriscpg\Menu\Model\ResourceModel\MenuItem\CollectionFactory;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Data\Form\FormKey\Validator as FormKeyValidator;
 
 class MenuItemRepository implements MenuItemRepositoryInterface
 {
@@ -21,12 +22,12 @@ class MenuItemRepository implements MenuItemRepositoryInterface
     /**
      * @param MenuItemResource $resource
      * @param MenuItemFactory $factory
-     * @param FormKeyValidator $validator
+     * @param SearchResultsInterfaceFactory $searchResultsFactory
+     * @param CollectionFactory $collectionFactory
      */
     public function __construct(
         private readonly MenuItemResource $resource,
         private readonly MenuItemFactory $factory,
-        private readonly FormKeyValidator $validator,
         private readonly SearchResultsInterfaceFactory $searchResultsFactory,
         private readonly CollectionFactory $collectionFactory,
     ) {
@@ -93,6 +94,12 @@ class MenuItemRepository implements MenuItemRepositoryInterface
         return (int) $item->getId();
     }
 
+    /**
+     * Get list of menu items matching criteria
+     *
+     * @param SearchCriteriaInterface $searchCriteria
+     * @return SearchResultsInterface
+     */
     public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface
     {
         $collection = $this->collectionFactory->create();
