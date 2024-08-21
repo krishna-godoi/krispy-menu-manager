@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'Magento_Ui/js/form/element/abstract',
+    'Magento_Ui/js/form/element/text',
     'Magento_Ui/js/modal/modal',
     'ko'
 ], function ($, Abstract, modal, ko) {
@@ -19,24 +19,15 @@ define([
     };
 
     window.createItem = function (item) {
-        if (!window.menuBuilderContext) {
-            const key = getHash(8);
-
-            window.menuBuilderContext = {
-                key,
-                items: {}
-            }
-        }
-
         const items = window.menuBuilderContext.items;
-        const { parentId } = item;
+        const { parent_id } = item;
         let id = Object.values(items).length;
 
         item.id = id;
         items[id] = item;
 
-        if (parentId) {
-            items[parentId] = {...items[parentId], children: [...(items[parentId].children || []), item.id]}
+        if (parent_id) {
+            items[parent_id] = {...items[parent_id], children: [...(items[parent_id].children || []), item.id]}
         }
 
         $('#menu-builder-items').trigger('itemadded')
@@ -44,6 +35,15 @@ define([
 
     return Abstract.extend({
         initialize: function () {
+            if (!window.menuBuilderContext) {
+                const key = getHash(8);
+
+                window.menuBuilderContext = {
+                    key,
+                    items: {}
+                }
+            }
+
             this._super();
             return this;
         },
@@ -54,7 +54,7 @@ define([
 
         refreshItems: function () {
             const items = window.menuBuilderContext.items;
-            let queue = Object.values(items).filter((item) => !item.parentId).map((item) => item.id);
+            let queue = Object.values(items).filter((item) => !item.parent_id).map((item) => item.id);
 
             let builderItems = $('#menu-builder-items');
             builderItems.empty();
@@ -74,12 +74,17 @@ define([
                     domItem.id = item.id;
                     domItem.append(domContent);
 
-                    const insertPoint = item.parentId ? $(`#${item.parentId}`) : builderItems;
+                    const insertPoint = item.parent_id ? $(`#${item.parent_id}`) : builderItems;
                     insertPoint.append(domItem);
                 }
 
                 queue.splice(0, inserted);
             }
+
+            let $input = $('input[name="items"]');
+            $input.val(JSON.stringify(items));
+            $input.trigger('change');
+            $('#menu-items-input').val(JSON.stringify(items));
         }
     });
 });

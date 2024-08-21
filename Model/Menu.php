@@ -37,11 +37,12 @@ class Menu extends AbstractModel implements MenuInterface
      * Set Menu ID
      *
      * @param int $menuId
-     * @return void
+     * @return Menu
      */
-    public function setMenuId(int $menuId): void
+    public function setMenuId(int $menuId): Menu
     {
         $this->setData(self::MENU_ID, $menuId);
+        return $this;
     }
 
     /**
@@ -58,11 +59,12 @@ class Menu extends AbstractModel implements MenuInterface
      * Set menu name
      *
      * @param string $name
-     * @return void
+     * @return Menu
      */
-    public function setName(string $name): void
+    public function setName(string $name): Menu
     {
         $this->setData(self::NAME, $name);
+        return $this;
     }
 
     /**
@@ -79,11 +81,12 @@ class Menu extends AbstractModel implements MenuInterface
      * Set menu identifier
      *
      * @param string $identifier
-     * @return void
+     * @return Menu
      */
-    public function setIdentifier(string $identifier): void
+    public function setIdentifier(string $identifier): Menu
     {
         $this->setData(self::IDENTIFIER, $identifier);
+        return $this;
     }
 
     /**
@@ -100,11 +103,12 @@ class Menu extends AbstractModel implements MenuInterface
      * Set menu created time
      *
      * @param string $createdAt
-     * @return void
+     * @return Menu
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(string $createdAt): Menu
     {
         $this->setData(self::CREATED_AT, $createdAt);
+        return $this;
     }
 
     /**
@@ -121,11 +125,12 @@ class Menu extends AbstractModel implements MenuInterface
      * Set menu update time
      *
      * @param string $updatedAt
-     * @return void
+     * @return Menu
      */
-    public function setUpdatedAt(string $updatedAt): void
+    public function setUpdatedAt(string $updatedAt): Menu
     {
         $this->setData(self::UPDATED_AT, $updatedAt);
+        return $this;
     }
 
     /**
@@ -142,10 +147,11 @@ class Menu extends AbstractModel implements MenuInterface
      * Set menu is_active
      *
      * @param bool $isActive
-     * @return void
+     * @return Menu
      */
-    public function setIsActive(bool $isActive): void
+    public function setIsActive(bool $isActive): Menu
     {
         $this->setData(self::IS_ACTIVE, $isActive);
+        return $this;
     }
 }

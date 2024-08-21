@@ -48,7 +48,8 @@ interface MenuItemRepositoryInterface
      * Create menu item
      *
      * @param mixed $data
+     * @param int $menuId
      * @return int
      */
-    public function createItem(mixed $data): int;
+    public function createItem(mixed $data, int $menuId): int;
 }

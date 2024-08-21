@@ -81,13 +81,14 @@ class MenuItemRepository implements MenuItemRepositoryInterface
      * Create menu item
      *
      * @param mixed $data
+     * @param int $menuId
      * @return int
      * @throws LocalizedException
      */
-    public function createItem(mixed $data): int
+    public function createItem(mixed $data, int $menuId): int
     {
         $item = $this->factory->create();
-        $item->setData($data);
+        $item->setData($data)->setMenuId($menuId);
 
         $this->resource->save($item);
 

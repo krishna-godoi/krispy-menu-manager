@@ -26,7 +26,7 @@
             </item>
         </argument>
         <settings>
-            <submitUrl path="menu_block/menu/save"/>
+            <submitUrl path="kriscpg_menu/menu/save"/>
         </settings>
         <dataProvider class="Kriscpg\Menu\Ui\Menu\DataProvider" name="menu_block_form_data_source">
             <settings>
@@ -44,7 +44,6 @@
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">menu</item>
                 </item>
-                <item name="htmlId" xsi:type="string">test-id</item>
             </argument>
             <settings>
                 <dataType>text</dataType>
@@ -91,16 +90,33 @@
                 <dataScope>name</dataScope>
             </settings>
         </field>
-        <field name="items">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="component" xsi:type="string">Kriscpg_Menu/js/form/element/menu-builder</item>
-                    <item name="template" xsi:type="string">Kriscpg_Menu/menu-builder</item>
-                    <item name="label" xsi:type="string" translate="true">Menu Items</item>
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                </item>
-            </argument>
-        </field>
+        <container name="menu_items">
+            <field name="items" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">menu</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">items</item>
+                    </item>
+                </argument>
+                <settings>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <label translate="true">Menu Items</label>
+                    <visible>false</visible>
+                </settings>
+            </field>
+            <field name="item-builder" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="component" xsi:type="string">Kriscpg_Menu/js/form/element/menu-builder</item>
+                        <item name="template" xsi:type="string">Kriscpg_Menu/menu-builder</item>
+                        <item name="label" xsi:type="string" translate="true">Menu Items</item>
+                        <item name="dataScope" xsi:type="string">items</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
     </fieldset>
 </form>
