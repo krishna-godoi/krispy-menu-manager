@@ -84,7 +84,6 @@ define([
             let $input = $('input[name="items"]');
             $input.val(JSON.stringify(items));
             $input.trigger('change');
-            $('#menu-items-input').val(JSON.stringify(items));
         }
     });
 });
