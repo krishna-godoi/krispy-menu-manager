@@ -107,7 +107,7 @@
                     <visible>false</visible>
                 </settings>
             </field>
-            <field name="item-builder" formElement="input">
+            <container name="item-builder">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="component" xsi:type="string">Kriscpg_Menu/js/form/element/menu-builder</item>
@@ -116,7 +116,7 @@
                         <item name="dataScope" xsi:type="string">items</item>
                     </item>
                 </argument>
-            </field>
+            </container>
         </container>
     </fieldset>
 </form>

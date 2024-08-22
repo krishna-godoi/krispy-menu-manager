@@ -1,20 +1,12 @@
 <div id="add-item-modal" style="display:none;">
     <div class="modal-content">
-        <form
-            id="item-creation-form"
-        >
-            <label for="item-type">Item Type</label>
-            <select id="item-type" name="menu_item_type">
-                <option value="link">Link</option>
-                <option value="category">Category</option>
-                <option value="container">Container Item</option>
-            </select>
+        <form id="item-creation-form">
+            <input id="item-parent" type="hidden" name="parent_id" />
             <label for="item-label">Label</label>
-            <input id="item-label" type="text" name="label" />
+            <input id="item-label" type="text" name="label" required/>
             <label for="item-url">Target URL</label>
             <input id="item-url" type="text" name="target_url" />
-            <label for="item-parent">Parent ID</label>
-            <input id="item-parent" type="text" name="parent_id" />
+            <button id="item-creation-submit" type="submit" hidden>submit</button>
         </form>
     </div>
 </div>
@@ -34,15 +26,18 @@
                 text: $.mage.__('Save'),
                 class: '',
                 click: function () {
-                    handleItemSave();
+                    $('#item-creation-submit').click();
                 }
             }]
         };
 
         modal(options, $('#add-item-modal'));
 
-        const handleItemSave = function(e) {
-            const form = $('#item-creation-form');
+        const form = $('#item-creation-form');
+
+        form.on('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
             let formData = form.serializeArray();
             let item = {};
@@ -52,9 +47,7 @@
             })
 
             window.createItem(item);
-
-            $('#add-item-modal').modal('closeModal');
-            form.trigger('reset');
-        };
+            window.closeItemModal();
+        })
     });
 </script>
